@@ -1,11 +1,29 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import { Inter } from 'next/font/google'
-import styles from '@/styles/Home.module.css'
+import Head from "next/head";
+import Image from "next/image";
+import { Inter } from "next/font/google";
+import styles from "@/styles/Home.module.css";
+import { useCallback, useEffect } from "react";
+import { fetchAPI, loadAPI } from "../store/modules/data/actions";
+import { useDispatch } from "react-redux";
+import { ApiLoad } from "@/store/modules/data/types";
 
-const inter = Inter({ subsets: ['latin'] })
+const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
+  const dispatch = useDispatch();
+
+  const getCharacters = useCallback(async () => {
+    const { data } = await dispatch(fetchAPI());
+
+    if (data) {
+      dispatch(loadAPI(data as unknown as ApiLoad));
+    }
+  }, [dispatch]);
+
+  useEffect(() => {
+    getCharacters();
+  }, [getCharacters]);
+
   return (
     <>
       <Head>
@@ -26,7 +44,7 @@ export default function Home() {
               target="_blank"
               rel="noopener noreferrer"
             >
-              By{' '}
+              By{" "}
               <Image
                 src="/vercel.svg"
                 alt="Vercel Logo"
@@ -119,5 +137,5 @@ export default function Home() {
         </div>
       </main>
     </>
-  )
+  );
 }
