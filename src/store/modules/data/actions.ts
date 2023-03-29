@@ -1,21 +1,21 @@
 import { ApiLoad } from "./types";
 
-export function fetchAPI() {
+export function fetchFromAPI(url: string) {
   return {
-    type: "FETCH_API",
+    type: "FETCH_FROM_API",
     request: {
-      url: "/",
+      url,
       method: "get",
     },
     data: [],
   };
 }
 
-export function loadAPI({ info, results }: ApiLoad) {
+export function displayFoundResults({ results }: ApiLoad) {
+
   return {
-    type: "LOAD_API",
+    type: "DISPLAY_FOUND_RESULTS",
     payload: {
-      info,
       results,
     },
   };

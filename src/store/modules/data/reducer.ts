@@ -1,13 +1,7 @@
 import { ApiLoad } from "./types";
 import { Reducer } from "redux";
 
-const DATA_INITIAL_STATE: ApiLoad = {
-  info: {
-    count: 0,
-    pages: 0,
-    next: null,
-    prev: null,
-  },
+export const DATA_INITIAL_STATE: ApiLoad = {
   results: [
     {
       created: "",
@@ -25,17 +19,14 @@ const DATA_INITIAL_STATE: ApiLoad = {
   ],
 };
 
-const data: Reducer<ApiLoad> = (
-  state = DATA_INITIAL_STATE,
-  action
-) => {
+const data: Reducer<ApiLoad> = (state = DATA_INITIAL_STATE, action) => {
   switch (action.type) {
-    case "LOAD_API":
+    case "DISPLAY_FOUND_RESULTS":
       const { payload } = action;
-
-      console.log(payload);
-
-      return state;
+      return {
+        ...state,
+        results: payload.results,
+      };
 
     default:
       return state;

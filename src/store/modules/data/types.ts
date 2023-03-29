@@ -1,11 +1,4 @@
-type ApiInfo = {
-  count: number;
-  next?: string | null;
-  pages: number;
-  prev?: string | null;
-};
-
-type Character = {
+export type Character = {
   created: string;
   episode: string[];
   gender: string;
@@ -20,6 +13,5 @@ type Character = {
 };
 
 export type ApiLoad = {
-  info: ApiInfo;
   results: Character[];
 };

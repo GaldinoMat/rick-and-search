@@ -1,3 +1,4 @@
+import { ApiLoad } from "./modules/data/types";
 import { createDriver } from "@redux-requests/axios";
 import { handleRequests } from "@redux-requests/core";
 import axios from "axios";
@@ -8,7 +9,11 @@ import {
 } from "redux";
 import characters from "./modules/data/reducer";
 
-const { requestsReducer, requestsMiddleware } = handleRequests({
+export type IStateType = {
+  characters: ApiLoad;
+};
+
+export const { requestsReducer, requestsMiddleware } = handleRequests({
   driver: createDriver(
     axios.create({
       baseURL: "https://rickandmortyapi.com/api/character",

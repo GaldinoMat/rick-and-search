@@ -1,30 +1,30 @@
+import {
+  displayFoundResults,
+  fetchFromAPI,
+} from "@/store/modules/data/actions";
 import Head from "next/head";
-import Image from "next/image";
-import { Inter } from "next/font/google";
-import styles from "@/styles/Home.module.css";
-import { useCallback, useEffect } from "react";
-import { fetchAPI, loadAPI } from "../store/modules/data/actions";
+import { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
-import { ApiLoad } from "@/store/modules/data/types";
-import Header from "@/components/Header";
-import Footer from "@/components/Footer";
-
-const inter = Inter({ subsets: ["latin"] });
 
 export default function Home() {
   const dispatch = useDispatch();
+  const [queryType, setQueryType] = useState("name");
+  const [query, setQuery] = useState("");
 
-  const getCharacters = useCallback(async () => {
-    const { data } = await dispatch(fetchAPI());
+  const handleSearch = async () => {
+    const { data }: any = await dispatch(
+      fetchFromAPI(`/?${queryType}=${query.toLowerCase()}`)
+    );
 
-    if (data) {
-      dispatch(loadAPI(data as unknown as ApiLoad));
+    dispatch(displayFoundResults(data));
+  };
+
+  const handleChange = (e: Event) => {
+    const { target } = e;
+    if (target) {
+      setQueryType((target as HTMLSelectElement).value);
     }
-  }, [dispatch]);
-
-  useEffect(() => {
-    getCharacters();
-  }, [getCharacters]);
+  };
 
   return (
     <>
@@ -34,10 +34,37 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <main className={styles.main}>
-        <Header />
-        <Footer />
-      </main>
+      <section>
+        <div>
+          <h1>Search through 760 characters info in 42 pages</h1>
+        </div>
+        <div data-testid="search-form">
+          <input
+            type="text"
+            placeholder="Place your search here!"
+            value={query}
+            data-testid="search-input"
+            onChange={(e) => setQuery(e.target.value)}
+          />
+          <label htmlFor="searchBy">
+            Search By:
+            <select
+              name="searchBy"
+              id="searchBy"
+              data-testid="search-select"
+              onChange={(e) => handleChange(e as unknown as Event)}
+            >
+              <option value="name">Name</option>
+              <option value="status">Status</option>
+              <option value="species">Species</option>
+              <option value="gender">Gender</option>
+            </select>
+          </label>
+          <button data-testid="search-go" onClick={() => handleSearch()}>
+            Search!
+          </button>
+        </div>
+      </section>
     </>
   );
 }
