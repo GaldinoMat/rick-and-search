@@ -11,12 +11,12 @@ export function fetchFromAPI(url: string) {
   };
 }
 
-export function displayFoundResults({ results }: ApiLoad) {
-
+export function displayFoundResults({ results, info }: ApiLoad) {
   return {
     type: "DISPLAY_FOUND_RESULTS",
     payload: {
       results,
+      info,
     },
   };
 }

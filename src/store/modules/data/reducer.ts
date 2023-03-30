@@ -2,6 +2,12 @@ import { ApiLoad } from "./types";
 import { Reducer } from "redux";
 
 export const DATA_INITIAL_STATE: ApiLoad = {
+  info: {
+    count: 0,
+    pages: 0,
+    next: null,
+    prev: null,
+  },
   results: [
     {
       created: "",
@@ -25,6 +31,7 @@ const data: Reducer<ApiLoad> = (state = DATA_INITIAL_STATE, action) => {
       const { payload } = action;
       return {
         ...state,
+        info: payload.info,
         results: payload.results,
       };
 

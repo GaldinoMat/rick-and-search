@@ -9,10 +9,6 @@ import {
 } from "redux";
 import characters from "./modules/data/reducer";
 
-export type IStateType = {
-  characters: ApiLoad;
-};
-
 export const { requestsReducer, requestsMiddleware } = handleRequests({
   driver: createDriver(
     axios.create({

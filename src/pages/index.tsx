@@ -1,15 +1,26 @@
+import CharactersSection from "@/components/CharactersSection";
+import Pagination from "@/components/Pagination";
 import {
   displayFoundResults,
   fetchFromAPI,
 } from "@/store/modules/data/actions";
+import { Character, CharacterState } from "@/store/modules/data/types";
 import Head from "next/head";
-import { useEffect, useState } from "react";
-import { useDispatch } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function Home() {
+  const data = useSelector<CharacterState, CharacterState>(
+    (state) => state
+  ).characters;
+
   const dispatch = useDispatch();
   const [queryType, setQueryType] = useState("name");
   const [query, setQuery] = useState("");
+
+  const [charactersData, setCharactersData] = useState<Character[]>(
+    data?.results
+  );
 
   const handleSearch = async () => {
     const { data }: any = await dispatch(
@@ -26,6 +37,10 @@ export default function Home() {
     }
   };
 
+  useEffect(() => {
+    setCharactersData(data?.results);
+  }, [data]);
+
   return (
     <>
       <Head>
@@ -36,7 +51,7 @@ export default function Home() {
       </Head>
       <section>
         <div>
-          <h1>Search through 760 characters info in 42 pages</h1>
+          <h1>Search through 826 characters info in 42 pages</h1>
         </div>
         <div data-testid="search-form">
           <input
@@ -65,6 +80,8 @@ export default function Home() {
           </button>
         </div>
       </section>
+      <CharactersSection charactersData={charactersData} />
+      <Pagination data={data} />
     </>
   );
 }
