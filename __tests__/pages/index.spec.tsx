@@ -8,6 +8,7 @@ import { Provider } from "react-redux";
 import configureStore, { MockStoreEnhanced } from "redux-mock-store";
 import { fireEvent, render, screen } from "@testing-library/react";
 import data from "@/store/modules/data/reducer";
+import React from "react";
 
 const makeSut = () => {
   const mockStore = configureStore(requestsMiddleware);
@@ -23,6 +24,12 @@ const renderHome = (sutStore: MockStoreEnhanced<unknown, {}>) => {
 };
 
 const mockData = {
+  info: {
+    count: 0,
+    pages: 0,
+    next: null,
+    prev: null,
+  },
   results: [
     {
       created: "",
