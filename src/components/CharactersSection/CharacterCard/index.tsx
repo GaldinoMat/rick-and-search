@@ -1,6 +1,7 @@
 import { Character } from "@/store/modules/data/types";
 import React from "react";
 import Image from "next/image";
+import Link from "next/link";
 
 type CharacterCardType = {
   character: Character;
@@ -8,7 +9,7 @@ type CharacterCardType = {
 
 function CharacterCard({ character }: CharacterCardType) {
   return (
-    <div data-testid="test-character">
+    <Link href={`/character/${character.id}`} data-testid="test-character">
       <Image
         src={character.image}
         alt={`${character.name}'s thumbnail image`}
@@ -18,7 +19,7 @@ function CharacterCard({ character }: CharacterCardType) {
       />
       <p>{character.name}</p>
       <p>{character.status}</p>
-    </div>
+    </Link>
   );
 }
 
