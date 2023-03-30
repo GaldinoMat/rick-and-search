@@ -8,6 +8,7 @@ import { Character, CharacterState } from "@/store/modules/data/types";
 import Head from "next/head";
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { apiGet } from "./api/api";
 
 export default function Home() {
   const data = useSelector<CharacterState, CharacterState>(
@@ -23,11 +24,11 @@ export default function Home() {
   );
 
   const handleSearch = async () => {
-    const { data }: any = await dispatch(
-      fetchFromAPI(`/?${queryType}=${query.toLowerCase()}`)
+    await apiGet(
+      dispatch,
+      fetchFromAPI(`/?${queryType}=${query.toLowerCase()}`),
+      displayFoundResults
     );
-
-    dispatch(displayFoundResults(data));
   };
 
   const handleChange = (e: Event) => {

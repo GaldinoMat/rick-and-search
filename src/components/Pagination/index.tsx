@@ -1,5 +1,12 @@
+import { apiGet } from "@/pages/api/api";
+import {
+  displayFoundResults,
+  fetchFromAPI,
+} from "@/store/modules/data/actions";
 import { ApiLoad } from "@/store/modules/data/types";
 import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+import PaginationButton from "./PaginationButton";
 
 type PaginationType = {
   data: ApiLoad;
@@ -19,6 +26,8 @@ export function matchNextPages(data: ApiLoad) {
 }
 
 function Pagination({ data }: PaginationType) {
+  const dispatch = useDispatch();
+
   const [pages, setPages] = useState<{
     current: number | null;
     prev: number | null;
@@ -35,11 +44,29 @@ function Pagination({ data }: PaginationType) {
     setPages(matchNextPages(data));
   }, [data]);
 
+  const handlePageChange = async (url: string) => {
+    await apiGet(
+      dispatch,
+      fetchFromAPI(url.split("/").pop() as string),
+      displayFoundResults
+    );
+  };
+
   return (
     <section data-testid="test-pagination">
-      <button>{pages?.prev}</button>
+      <PaginationButton
+        handlePageChange={handlePageChange}
+        pageNumber={pages?.prev}
+        testid={"test-prev-button"}
+        url={data?.info?.prev as string}
+      />
       <button>{pages?.current}</button>
-      <button>{pages?.next}</button>
+      <PaginationButton
+        handlePageChange={handlePageChange}
+        pageNumber={pages?.next}
+        testid={"test-next-button"}
+        url={data?.info?.next as string}
+      />
     </section>
   );
 }
