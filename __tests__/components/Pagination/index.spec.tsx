@@ -1,10 +1,10 @@
 import Pagination, { matchNextPages } from "@/components/Pagination";
-import store, { requestsMiddleware } from "@/store";
 import { ApiLoad } from "@/store/modules/data/types";
 import { render, screen } from "@testing-library/react";
 import React from "react";
 import { Provider } from "react-redux";
-import configureStore, { MockStoreEnhanced } from "redux-mock-store";
+import { MockStoreEnhanced } from "redux-mock-store";
+import { makeSut } from "../../store/store.spec";
 
 const mockPageData = (next: string | null, prev: string | null) => {
   return {
@@ -15,12 +15,8 @@ const mockPageData = (next: string | null, prev: string | null) => {
       prev,
     },
     results: [],
+    favourites: [],
   };
-};
-
-const makeSut = () => {
-  const mockStore = configureStore(requestsMiddleware);
-  return mockStore(store);
 };
 
 const renderPagination = (

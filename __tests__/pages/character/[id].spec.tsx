@@ -2,7 +2,7 @@ import Character, {
   getStaticPaths,
   getStaticProps,
 } from "@/pages/character/[id]";
-import { render, screen, waitFor } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import React from "react";
 
 const mockCharacter = {
@@ -27,7 +27,7 @@ describe("Character page", () => {
   test("should render when proper data is provided", () => {
     render(<Character data={mockCharacter} />);
 
-    const character = screen.getByTestId("test-character");
+    const character = screen.getByTestId("test-character-page");
     const characterName = screen.getByTestId("test-character-name");
     expect(character).toBeInTheDocument();
     expect(characterName).toBeInTheDocument();

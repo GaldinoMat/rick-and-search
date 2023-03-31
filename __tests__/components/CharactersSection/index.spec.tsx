@@ -2,9 +2,19 @@ import CharactersSection from "@/components/CharactersSection";
 import { Character } from "@/store/modules/data/types";
 import { render, screen } from "@testing-library/react";
 import React from "react";
+import { Provider } from "react-redux";
+import { MockStoreEnhanced } from "redux-mock-store";
+import { makeSut } from "../../store/store.spec";
 
-const renderCharList = (charactersData: Character[]) => {
-  render(<CharactersSection charactersData={charactersData} />);
+const renderCharList = (
+  sutStore: MockStoreEnhanced<unknown, {}>,
+  charactersData: Character[]
+) => {
+  render(
+    <Provider store={sutStore}>
+      <CharactersSection charactersData={charactersData} />
+    </Provider>
+  );
 };
 
 describe("Characters Section", () => {
@@ -34,7 +44,8 @@ describe("Characters Section", () => {
         created: "2017-11-04T18:48:46.250Z",
       },
     ];
-    renderCharList(mockArrayData);
+    const mockedStore = makeSut();
+    renderCharList(mockedStore, mockArrayData);
     const charList = screen.getAllByTestId("test-character");
     expect(charList).toHaveLength(1);
   });
