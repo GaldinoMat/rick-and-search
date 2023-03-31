@@ -47,6 +47,7 @@ const data: Reducer<ApiLoad> = (state = DATA_INITIAL_STATE, action) => {
       return {
         ...state,
       };
+
     case "LOAD_FAVOURITES":
       const { favourites } = action.payload;
 
@@ -63,6 +64,18 @@ const data: Reducer<ApiLoad> = (state = DATA_INITIAL_STATE, action) => {
 
       return {
         ...state,
+      };
+
+    case "DELETE_FAVOURITE_CHARACTER":
+      const { character: deletedFavorite } = action.payload;
+
+      const newFavouritesState = state.favourites.filter(
+        (favourite) => favourite.id !== deletedFavorite.id
+      );
+
+      return {
+        ...state,
+        favourites: newFavouritesState,
       };
 
     default:

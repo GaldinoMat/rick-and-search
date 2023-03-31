@@ -30,6 +30,15 @@ export function favouriteCharacter(character: Character) {
   };
 }
 
+export function removeFavorite(character: Character) {
+  return {
+    type: "DELETE_FAVOURITE_CHARACTER",
+    payload: {
+      character,
+    },
+  };
+}
+
 export function saveOnStorage() {
   return {
     type: "SAVE_FAVOURITES",
