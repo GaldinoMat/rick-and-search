@@ -8,7 +8,7 @@ type CharactersType = {
 
 function CharactersSection({ charactersData }: CharactersType) {
   return (
-    <section>
+    <section data-testid="test-characters-section">
       {charactersData?.map((character: Character) => (
         <CharacterCard character={character} key={character.id} />
       ))}

@@ -1,7 +1,7 @@
 import Home from "@/pages";
 import { Provider } from "react-redux";
 import { MockStoreEnhanced } from "redux-mock-store";
-import { fireEvent, render, screen } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import React from "react";
 import { makeSut } from "../store/modules/data/reducer.spec";
 

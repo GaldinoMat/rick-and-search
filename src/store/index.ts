@@ -1,4 +1,3 @@
-import { ApiLoad } from "./modules/data/types";
 import { createDriver } from "@redux-requests/axios";
 import { handleRequests } from "@redux-requests/core";
 import {

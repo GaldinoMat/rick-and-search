@@ -1,5 +1,4 @@
 import CharactersSection from "@/components/CharactersSection";
-import Pagination from "@/components/Pagination";
 import { fetchFromAPI, loadFoundResults } from "@/store/modules/data/actions";
 import { CharacterState } from "@/store/modules/data/types";
 import React, { useState } from "react";
@@ -7,6 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { apiGet } from "../api/api";
 import Head from "next/head";
 import Link from "next/link";
+import Pagination from "@/components/SearchPagination";
 
 function Search() {
   const data = useSelector<CharacterState, CharacterState>(

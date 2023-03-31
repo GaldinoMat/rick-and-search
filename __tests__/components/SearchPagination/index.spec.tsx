@@ -1,10 +1,10 @@
-import Pagination, { matchNextPages } from "@/components/Pagination";
 import { ApiLoad } from "@/store/modules/data/types";
 import { render, screen } from "@testing-library/react";
 import React from "react";
 import { Provider } from "react-redux";
 import { MockStoreEnhanced } from "redux-mock-store";
 import { makeSut } from "../../store/modules/data/reducer.spec";
+import Pagination, { matchNextPages } from "@/components/SearchPagination";
 
 const mockPageData = (next: string | null, prev: string | null) => {
   return {
