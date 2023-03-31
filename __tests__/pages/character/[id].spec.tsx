@@ -4,6 +4,8 @@ import Character, {
 } from "@/pages/character/[id]";
 import { render, screen } from "@testing-library/react";
 import React from "react";
+import { makeSut } from "../../store/store.spec";
+import { Provider } from "react-redux";
 
 const mockCharacter = {
   created: "2017-11-04T20:03:34.737Z",
@@ -25,7 +27,12 @@ const mockCharacter = {
 
 describe("Character page", () => {
   test("should render when proper data is provided", () => {
-    render(<Character data={mockCharacter} />);
+    const mockedStore = makeSut();
+    render(
+      <Provider store={mockedStore}>
+        <Character data={mockCharacter} />
+      </Provider>
+    );
 
     const character = screen.getByTestId("test-character-page");
     const characterName = screen.getByTestId("test-character-name");
