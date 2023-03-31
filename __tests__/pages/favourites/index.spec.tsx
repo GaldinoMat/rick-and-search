@@ -2,7 +2,7 @@ import { render, screen, waitFor } from "@testing-library/react";
 import { Provider } from "react-redux";
 import { MockStoreEnhanced } from "redux-mock-store";
 import { makeSut } from "../../store/modules/data/reducer.spec";
-import Favourites from "@/pages/favourites";
+import Favourites, { splitArray } from "@/pages/favourites";
 import data from "@/store/modules/data/reducer";
 
 const renderFavourites = (sutStore: MockStoreEnhanced<unknown, {}>) => {
@@ -85,5 +85,12 @@ describe("Favourites page", () => {
       );
       expect(favouriteCharacterSection).toBeInTheDocument();
     });
+  });
+
+  test("should return a array of arrays when called", () => {
+    const arr = Array.from({ length: 21 }, (_, i) => i + 1);
+    const newArr = splitArray(arr);
+
+    expect(newArr).toHaveLength(2);
   });
 });
