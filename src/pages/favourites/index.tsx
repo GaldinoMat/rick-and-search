@@ -1,15 +1,33 @@
 import CharactersSection from "@/components/CharactersSection";
 import { loadFavourites } from "@/store/modules/data/actions";
-import { CharacterState } from "@/store/modules/data/types";
-import React, { useEffect } from "react";
+import { Character, CharacterState } from "@/store/modules/data/types";
+import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Head from "next/head";
+import FavouritesPaginationButton from "@/components/FavouritesPaginationButton";
+
+export function splitArray(array: any[]) {
+  const subarrays = [];
+  for (let i = 0; i < array?.length; i += 20) {
+    subarrays.push(array?.slice(i, i + 20));
+  }
+  return subarrays;
+}
 
 function Favourites() {
   const data = useSelector<CharacterState, CharacterState>((state) => state)
     .characters?.favourites;
 
   const dispatch = useDispatch();
+
+  const [paginatedFavourites, setPaginatedFavourites] = useState<Character[][]>(
+    []
+  );
+  const [displayedFavorites, setdisplayedFavorites] = useState<Character[]>([]);
+
+  const handleChangeFavouritePage = (index: number) => {
+    setdisplayedFavorites(paginatedFavourites[index]);
+  };
 
   useEffect(() => {
     const favouritesJson = JSON.parse(
@@ -18,6 +36,14 @@ function Favourites() {
 
     if (favouritesJson !== null) dispatch(loadFavourites(favouritesJson));
   }, [dispatch]);
+
+  useEffect(() => {
+    setPaginatedFavourites(splitArray(data));
+  }, [data]);
+
+  useEffect(() => {
+    setdisplayedFavorites(paginatedFavourites[0]);
+  }, [paginatedFavourites]);
 
   return (
     <>
@@ -35,7 +61,16 @@ function Favourites() {
           {data?.length === 0 ? (
             <h2 data-testid="test-no-favourites">Sorry, no favorites here!</h2>
           ) : (
-            <CharactersSection charactersData={data} />
+            <>
+              <CharactersSection charactersData={displayedFavorites} />
+              {paginatedFavourites.map((array, index) => (
+                <FavouritesPaginationButton
+                  handleChangeFavouritePage={handleChangeFavouritePage}
+                  index={index}
+                  key={index}
+                />
+              ))}
+            </>
           )}
         </div>
       </section>
