@@ -4,7 +4,7 @@ import Character, {
 } from "@/pages/character/[id]";
 import { render, screen } from "@testing-library/react";
 import React from "react";
-import { makeSut } from "../../store/store.spec";
+import { makeSut } from "../../store/modules/data/reducer.spec";
 import { Provider } from "react-redux";
 
 const mockCharacter = {

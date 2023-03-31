@@ -7,7 +7,7 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import React from "react";
 import { Provider } from "react-redux";
 import { MockStoreEnhanced } from "redux-mock-store";
-import { makeSut } from "../../../store/store.spec";
+import { makeSut } from "../../../store/modules/data/reducer.spec";
 
 const mockCharacter = {
   created: "2017-11-04T20:03:34.737Z",
@@ -38,7 +38,7 @@ const renderChar = (
   );
 };
 
-describe("Characters Section", () => {
+describe("Character Card", () => {
   test("should properly render character data", () => {
     const mockedStore = makeSut();
     renderChar(mockedStore, mockCharacter);

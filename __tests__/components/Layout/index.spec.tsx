@@ -3,7 +3,7 @@ import { render, screen } from "@testing-library/react";
 import Header from "@/components/Layout/components/Header";
 import Layout from "@/components/Layout";
 
-describe("Header", () => {
+describe("Layout Component", () => {
   test("should render Layout", () => {
     render(<Layout>hello</Layout>);
 
