@@ -1,8 +1,5 @@
 import { apiGet } from "@/pages/api/api";
-import {
-  displayFoundResults,
-  fetchFromAPI,
-} from "@/store/modules/data/actions";
+import { loadFoundResults, fetchFromAPI } from "@/store/modules/data/actions";
 import { ApiLoad } from "@/store/modules/data/types";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
@@ -48,7 +45,7 @@ function Pagination({ data }: PaginationType) {
     await apiGet(
       dispatch,
       fetchFromAPI(url.split("/").pop() as string),
-      displayFoundResults
+      loadFoundResults
     );
   };
 

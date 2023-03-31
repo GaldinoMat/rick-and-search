@@ -8,27 +8,13 @@ export const DATA_INITIAL_STATE: ApiLoad = {
     next: null,
     prev: null,
   },
-  results: [
-    {
-      created: "",
-      episode: [""],
-      gender: "",
-      id: 0,
-      image: "",
-      location: { name: "", url: "" },
-      name: "",
-      origin: { name: "", url: "" },
-      species: "",
-      status: "",
-      type: "",
-    },
-  ],
+  results: [],
   favourites: [],
 };
 
 const data: Reducer<ApiLoad> = (state = DATA_INITIAL_STATE, action) => {
   switch (action.type) {
-    case "DISPLAY_FOUND_RESULTS":
+    case "LOAD_FOUND_RESULTS":
       const { info, results } = action.payload;
 
       return {
@@ -40,17 +26,27 @@ const data: Reducer<ApiLoad> = (state = DATA_INITIAL_STATE, action) => {
     case "FAVOURITE_CHARACTER":
       const { character } = action.payload;
 
-      if (!state.favourites) {
+      if (state.favourites.length === 0) {
         return {
           ...state,
           favourites: [character],
         };
-      } else {
+      }
+
+      const foundFavourite = state.favourites.find(
+        (favorite) => favorite?.id === character?.id
+      );
+
+      if (!foundFavourite) {
         return {
           ...state,
           favourites: [...state.favourites, character],
         };
       }
+
+      return {
+        ...state,
+      };
     case "LOAD_FAVOURITES":
       const { favourites } = action.payload;
 

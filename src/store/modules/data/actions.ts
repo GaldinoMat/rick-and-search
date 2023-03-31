@@ -11,9 +11,9 @@ export function fetchFromAPI(url: string) {
   };
 }
 
-export function displayFoundResults({ results, info }: ApiLoad) {
+export function loadFoundResults({ results, info }: ApiLoad) {
   return {
-    type: "DISPLAY_FOUND_RESULTS",
+    type: "LOAD_FOUND_RESULTS",
     payload: {
       results,
       info,
