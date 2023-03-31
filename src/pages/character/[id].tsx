@@ -2,15 +2,25 @@ import { Character } from "@/store/modules/data/types";
 import { GetStaticPaths, GetStaticProps } from "next/types";
 import React from "react";
 import { api } from "../api/api";
+import FavouriteButton from "@/components/FavouriteButton";
+import { useDispatch } from "react-redux";
+import { handleAddFavourite } from "@/components/CharactersSection/CharacterCard";
 
 type CharacterType = {
   data: Character;
 };
 
 function Character({ data }: CharacterType) {
+  const dispatch = useDispatch();
+
   return (
     <section data-testid="test-character-page">
       <h1 data-testid="test-character-name">{data?.name}</h1>
+      <FavouriteButton
+        handleAddFavourite={handleAddFavourite}
+        character={data}
+        dispatch={dispatch}
+      />
       <p>{data?.species}</p>
       <p>{data?.gender}</p>
       <p>{data?.status}</p>
