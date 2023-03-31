@@ -1,5 +1,9 @@
 import store, { requestsMiddleware } from "@/store";
-import { loadFoundResults, loadFavourites } from "@/store/modules/data/actions";
+import {
+  loadFoundResults,
+  loadFavourites,
+  removeFavorite,
+} from "@/store/modules/data/actions";
 import configureStore from "redux-mock-store";
 import data from "@/store/modules/data/reducer";
 
@@ -167,7 +171,6 @@ describe("Redux store", () => {
   });
 
   test("should properly return same state when the a character is favorited again", () => {
-
     const successAction = {
       type: "FAVOURITE_CHARACTER",
       payload: { character: mockCharacter },
@@ -204,5 +207,23 @@ describe("Redux store", () => {
       payload: {},
     };
     expect(data(mockReturnData, successAction)).toEqual(mockReturnData);
+  });
+
+  test("should properly call delete favourite action", () => {
+    const mockedStore = makeSut();
+
+    mockedStore.dispatch(removeFavorite(mockCharacter));
+
+    const actions = mockedStore.getActions();
+    expect(actions[0]).toBeTruthy();
+  });
+
+  test("should delete favourite when delete favourite action is called", () => {
+    const successAction = {
+      type: "DELETE_FAVOURITE_CHARACTER",
+      payload: { character: mockCharacter },
+    };
+
+    expect(data(mockReturnData, successAction)).toEqual(mockCleanData);
   });
 });
