@@ -23,16 +23,50 @@ export const DATA_INITIAL_STATE: ApiLoad = {
       type: "",
     },
   ],
+  favourites: [],
 };
 
 const data: Reducer<ApiLoad> = (state = DATA_INITIAL_STATE, action) => {
   switch (action.type) {
     case "DISPLAY_FOUND_RESULTS":
-      const { payload } = action;
+      const { info, results } = action.payload;
+
       return {
         ...state,
-        info: payload.info,
-        results: payload.results,
+        info,
+        results,
+      };
+
+    case "FAVOURITE_CHARACTER":
+      const { character } = action.payload;
+
+      if (!state.favourites) {
+        return {
+          ...state,
+          favourites: [character],
+        };
+      } else {
+        return {
+          ...state,
+          favourites: [...state.favourites, character],
+        };
+      }
+    case "LOAD_FAVOURITES":
+      const { favourites } = action.payload;
+
+      return {
+        ...state,
+        favourites,
+      };
+
+    case "SAVE_FAVOURITES":
+      window.localStorage.setItem(
+        "favourites",
+        JSON.stringify(state?.favourites)
+      );
+
+      return {
+        ...state,
       };
 
     default:

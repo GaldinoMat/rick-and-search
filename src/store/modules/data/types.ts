@@ -21,6 +21,7 @@ export type Info = {
 
 export type ApiLoad = {
   results: Character[];
+  favourites: Character[];
   info: Info;
 };
 

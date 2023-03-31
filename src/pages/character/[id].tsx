@@ -8,10 +8,8 @@ type CharacterType = {
 };
 
 function Character({ data }: CharacterType) {
-  console.log(data);
-
   return (
-    <section data-testid="test-character">
+    <section data-testid="test-character-page">
       <h1 data-testid="test-character-name">{data?.name}</h1>
       <p>{data?.species}</p>
       <p>{data?.gender}</p>

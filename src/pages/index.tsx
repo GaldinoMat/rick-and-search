@@ -3,6 +3,7 @@ import Pagination from "@/components/Pagination";
 import {
   displayFoundResults,
   fetchFromAPI,
+  loadFavourites,
 } from "@/store/modules/data/actions";
 import { Character, CharacterState } from "@/store/modules/data/types";
 import Head from "next/head";
@@ -38,9 +39,21 @@ export default function Home() {
     }
   };
 
+  const handleFavouriteDisplay = () => {
+    setCharactersData(data?.favourites);
+  };
+
   useEffect(() => {
     setCharactersData(data?.results);
   }, [data]);
+
+  useEffect(() => {
+    const favouritesJson = JSON.parse(
+      window.localStorage.getItem("favourites") as string
+    );
+
+    dispatch(loadFavourites(favouritesJson));
+  }, [dispatch]);
 
   return (
     <>
@@ -78,6 +91,9 @@ export default function Home() {
           </label>
           <button data-testid="search-go" onClick={() => handleSearch()}>
             Search!
+          </button>
+          <button onClick={() => handleFavouriteDisplay()}>
+            Show your favourites!
           </button>
         </div>
       </section>
