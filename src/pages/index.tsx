@@ -1,6 +1,6 @@
 import Head from "next/head";
 import React from "react";
-import Link from "next/link";
+import HomeTitle from "@/components/HomeTitle";
 
 export default function Home() {
   return (
@@ -11,12 +11,7 @@ export default function Home() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <section data-testid="test-home">
-        <div>
-          <h1>Search through 826 characters info in 42 pages</h1>
-        </div>
-        <Link href="/search">Search!</Link>
-      </section>
+      <HomeTitle />
     </>
   );
 }

@@ -10,6 +10,7 @@ import {
 } from "@/store/modules/data/actions";
 import { AnyAction, Dispatch } from "redux";
 import FavouriteButton from "@/components/FavouriteButton";
+import styled from "styled-components";
 
 type CharacterCardType = {
   character: Character;
@@ -17,10 +18,34 @@ type CharacterCardType = {
 
 export type ActionReturnType = {
   type: string;
-  payload: {
-    character: Character;
-  };
+  payload: CharacterCardType;
 };
+
+const CharacterCardComponent = styled.div`
+  width: 8.65rem;
+  display: flex;
+  flex-direction: column;
+  align-items: left;
+  justify-content: left;
+  position: relative;
+  gap: .5rem;
+
+  a {
+    width: 100%;
+    height: 8.65rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    position: relative;
+  }
+
+  p {
+    font-size: 1rem;
+    font-weight: 700;
+  }
+`;
 
 export function handleAddFavourite(
   callback: Dispatch<AnyAction>,
@@ -49,18 +74,17 @@ function CharacterCard({ character }: CharacterCardType) {
     ?.characters?.favourites;
 
   return (
-    <div>
+    <CharacterCardComponent>
       <Link href={`/character/${character.id}`} data-testid="test-character">
         <Image
           src={character.image}
           alt={`${character.name}'s thumbnail image`}
-          width={100}
-          height={100}
+          fill
           priority
         />
-        <p>{character.name}</p>
-        <p>{character.status}</p>
       </Link>
+      <p>{character.name}</p>
+      <p>{character.status}</p>
       <FavouriteButton
         handleAddFavourite={handleAddFavourite}
         dispatch={dispatch}
@@ -69,7 +93,7 @@ function CharacterCard({ character }: CharacterCardType) {
         addCallback={favouriteCharacter}
         deleteCallback={removeFavorite}
       />
-    </div>
+    </CharacterCardComponent>
   );
 }
 

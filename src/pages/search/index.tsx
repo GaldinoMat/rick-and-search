@@ -5,8 +5,14 @@ import React, { useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { apiGet } from "../api/api";
 import Head from "next/head";
-import Link from "next/link";
 import Pagination from "@/components/SearchPagination";
+import SearchForm from "@/components/SearchForm";
+import styled from "styled-components";
+
+const CharactersSectionComponent = styled.section`
+  padding: 0 2.125rem;
+  padding-top: 1.5rem;
+`;
 
 function Search() {
   const data = useSelector<CharacterState, CharacterState>(
@@ -40,43 +46,20 @@ function Search() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <section>
-        <div data-testid="search-form">
-          <input
-            type="text"
-            placeholder="Place your search here!"
-            value={query}
-            data-testid="search-input"
-            onChange={(e) => setQuery(e.target.value)}
-          />
-          <label htmlFor="searchBy">
-            Search By:
-            <select
-              name="searchBy"
-              id="searchBy"
-              data-testid="search-select"
-              onChange={(e) => handleChange(e as unknown as Event)}
-            >
-              <option value="name">Name</option>
-              <option value="status">Status</option>
-              <option value="species">Species</option>
-              <option value="gender">Gender</option>
-            </select>
-          </label>
-          <button data-testid="search-go" onClick={() => handleSearch()}>
-            Search!
-          </button>
-          <Link href="/favourites">Show your favourites!</Link>
-        </div>
-      </section>
-      <section>
+      <SearchForm
+        handleChange={handleChange}
+        handleSearch={handleSearch}
+        query={query}
+        setQuery={setQuery}
+      />
+      <CharactersSectionComponent>
         {data?.results?.length !== 0 && (
           <>
             <CharactersSection charactersData={data?.results} />
             <Pagination data={data} />
           </>
         )}
-      </section>
+      </CharactersSectionComponent>
     </>
   );
 }
