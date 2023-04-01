@@ -27,7 +27,7 @@ const CharacterCardComponent = styled.div`
   box-shadow: 0 6px 10px 0 rgba(30, 12, 27, 0.1);
 
   @media (min-width: 768px) {
-    width: 9.1rem;
+    width: 12rem;
   }
 
   a {
@@ -41,7 +41,7 @@ const CharacterCardComponent = styled.div`
     position: relative;
 
     @media (min-width: 768px) {
-      height: 9.1rem;
+      height: 12rem;
     }
   }
 

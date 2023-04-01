@@ -34,7 +34,7 @@ const ImageContainer = styled.div`
 
   @media (min-width: 768px) {
     width: 16.625rem;
-    height: 25.25rem;
+    height: 22.25rem;
   }
 
   img {
@@ -104,6 +104,7 @@ const BioInfoText = styled.p`
   font-size: 0.875rem;
   font-weight: 300;
   line-height: 1.5;
+  text-align: right;
 
   @media (min-width: 768px) {
     font-size: 1rem;

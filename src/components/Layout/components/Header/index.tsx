@@ -3,15 +3,35 @@ import React from "react";
 import styled from "styled-components";
 
 const HeaderComponent = styled.header`
-  padding: 20px 0;
+  padding: 1.25rem 2.25rem;
   display: flex;
   align-items: center;
-  justify-content: center;
-  background-color: #1b284c;
+  justify-content: flex-start;
+  background-color: #ffc500;
+  width: 100%;
+
+  @media (min-width: 768px) {
+    padding: 1.25rem 3.25rem;
+  }
+
+  @media (min-width: 1024px) {
+    padding: 1.25rem 2rem;
+  }
+
+  div {
+    width: 100%;
+
+    @media (min-width: 1024px) {
+      width: 75%;
+      margin: 0 auto;
+    }
+  }
 
   a {
     font-weight: bold;
-    color: white;
+    color: #520044;
+    font-size: 1.125rem;
+    font-weight: 700;
 
     @media (min-width: 768px) {
       font-size: 1.25rem;
@@ -22,7 +42,9 @@ const HeaderComponent = styled.header`
 function Header() {
   return (
     <HeaderComponent data-testid="header">
-      <Link href="/">Rick and Searchy!</Link>
+      <div>
+        <Link href="/">Rick and Searchy!</Link>
+      </div>
     </HeaderComponent>
   );
 }

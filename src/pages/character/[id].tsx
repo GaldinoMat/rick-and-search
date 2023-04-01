@@ -11,10 +11,6 @@ type CharacterType = {
   data: Character;
 };
 
-const CharacterContainer = styled.div`
-  gap: 2rem;
-`;
-
 const BioCharTitle = styled.p`
   display: none;
 
@@ -39,11 +35,11 @@ function Character({ data }: CharacterType) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <CharacterContainer>
+      <div>
         <CharacterCardImage data={data} />
         <BioCharTitle>{data?.name}</BioCharTitle>
         <CharacterText />
-      </CharacterContainer>
+      </div>
     </>
   );
 }

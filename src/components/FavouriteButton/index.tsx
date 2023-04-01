@@ -42,7 +42,7 @@ const FavouriteButtonComponent = styled(HeartFill)`
   transition: all 0.2s ease-out;
   fill: ${({ isfavorite }) => {
     const favoriteBool = isfavorite === "true";
-    return favoriteBool ? "#F44336" : "#F2994A";
+    return favoriteBool ? "#F44336" : "#520044";
   }};
 `;
 
