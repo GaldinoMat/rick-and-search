@@ -37,8 +37,7 @@ export function handleAddFavourite(
 const FavouriteButtonComponent = styled(HeartFill)`
   top: 0.25rem;
   right: 0;
-  width: 1.875rem;
-  height: 1.875rem;
+  width: 1.5rem;
   transition: all 0.2s ease-out;
   fill: ${({ isfavorite }) => {
     const favoriteBool = isfavorite === "true";

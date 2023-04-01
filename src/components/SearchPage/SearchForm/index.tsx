@@ -24,6 +24,10 @@ const SearchFormComponent = styled.form`
 const SearchFormContainer = styled.div`
   display: flex;
   gap: 0.5rem;
+
+  @media (min-width: 1024px) {
+    width: 55%;
+  }
 `;
 
 const InputComponent = styled.input`
@@ -36,6 +40,10 @@ const InputComponent = styled.input`
 
   @media (min-width: 768px) {
     font-size: 1rem;
+  }
+
+  @media (min-width: 1024px) {
+    width: 100%;
   }
 
   ::placeholder,
@@ -85,6 +93,7 @@ const SearchButtonContainer = styled.div`
 
   @media (min-width: 768px) {
     flex-direction: row;
+    width: auto;
   }
 
   a {

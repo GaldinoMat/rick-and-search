@@ -56,12 +56,20 @@ const CharacterTitleContainer = styled.div`
   justify-content: space-between;
   text-align: center;
   padding: 0.75rem;
+
+  @media (min-width: 768px) {
+    width: 100%;
+  }
 `;
 
 const CharacterInfoContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
+
+  @media (min-width: 768px) {
+    width: 100%;
+  }
 `;
 
 const CharacterName = styled.div`
