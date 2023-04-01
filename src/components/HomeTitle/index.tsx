@@ -12,17 +12,25 @@ const HomeDisclaimer = styled.section`
   gap: 1.5rem;
 
   a {
-    padding: .875rem 4.375rem;
-    background-color: #092C4C;
+    padding: 0.875rem 4.375rem;
+    background-color: #092c4c;
     color: white;
     font-weight: 700;
-    border-radius: .5rem;
+    border-radius: 0.5rem;
+
+    @media (min-width: 768px) {
+      font-size: 1.25rem;
+    }
   }
 `;
 
 const Title = styled.h1`
   font-size: 1.5rem;
   text-align: center;
+
+  @media (min-width: 768px) {
+    font-size: 2rem;
+  }
 `;
 
 function HomeTitle() {

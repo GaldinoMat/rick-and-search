@@ -4,7 +4,7 @@ import { Character, CharacterState } from "@/store/modules/data/types";
 import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Head from "next/head";
-import FavouritesPaginationButton from "@/components/FavouritesPaginationButton";
+import FavouritesPaginationButton from "@/components/FavouritesPage/FavouritesPaginationButton";
 import styled from "styled-components";
 
 export function splitArray(array: any[]) {

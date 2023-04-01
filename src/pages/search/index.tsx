@@ -5,8 +5,8 @@ import React, { FormEvent, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { apiGet } from "../api/api";
 import Head from "next/head";
-import Pagination from "@/components/SearchPagination";
-import SearchForm from "@/components/SearchForm";
+import Pagination from "@/components/SearchPage/SearchPagination";
+import SearchForm from "@/components/SearchPage/SearchForm";
 import styled from "styled-components";
 
 const CharactersSectionComponent = styled.section`

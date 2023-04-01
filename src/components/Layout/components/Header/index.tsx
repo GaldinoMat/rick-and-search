@@ -7,11 +7,15 @@ const HeaderComponent = styled.header`
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: #1B284C;
+  background-color: #1b284c;
 
   a {
     font-weight: bold;
     color: white;
+
+    @media (min-width: 768px) {
+      font-size: 1.25rem;
+    }
   }
 `;
 

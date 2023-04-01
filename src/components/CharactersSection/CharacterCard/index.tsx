@@ -1,15 +1,7 @@
-import { Character, CharacterState } from "@/store/modules/data/types";
-import React, { useEffect, useState } from "react";
+import { Character } from "@/store/modules/data/types";
+import React from "react";
 import Image from "next/image";
 import Link from "next/link";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  favouriteCharacter,
-  removeFavorite,
-  saveOnStorage,
-} from "@/store/modules/data/actions";
-import { AnyAction, Dispatch } from "redux";
-import FavouriteButton from "@/components/FavouriteButton";
 import styled from "styled-components";
 import useFavourites from "@/hooks/useFavourites";
 import BioStatus from "@/components/BioStatus";
@@ -32,6 +24,11 @@ const CharacterCardComponent = styled.div`
   justify-content: left;
   position: relative;
   gap: 0.5rem;
+  box-shadow: 0 6px 10px 0 rgba(30, 12, 27, 0.1);
+
+  @media (min-width: 768px) {
+    width: 9.1rem;
+  }
 
   a {
     width: 100%;
@@ -42,6 +39,10 @@ const CharacterCardComponent = styled.div`
     justify-content: center;
     gap: 0.5rem;
     position: relative;
+
+    @media (min-width: 768px) {
+      height: 9.1rem;
+    }
   }
 
   p {
@@ -53,6 +54,8 @@ const CharacterCardComponent = styled.div`
 const CharacterTitleContainer = styled.div`
   display: flex;
   justify-content: space-between;
+  text-align: center;
+  padding: 0.75rem;
 `;
 
 const CharacterInfoContainer = styled.div`
@@ -63,6 +66,7 @@ const CharacterInfoContainer = styled.div`
 
 const CharacterName = styled.div`
   min-height: 2.2rem;
+  text-align: left;
 `;
 
 function CharacterCard({ character }: CharacterCardType) {
@@ -81,7 +85,7 @@ function CharacterCard({ character }: CharacterCardType) {
           placeholder="blur"
           blurDataURL={blurDataURL}
           priority
-          sizes="(max-width: 768px) 8.65rem,
+          sizes="(max-width: 768px) 9.1rem,
               (max-width: 1200px) 50vw,
               33vw"
         />

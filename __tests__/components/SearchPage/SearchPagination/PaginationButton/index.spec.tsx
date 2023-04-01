@@ -1,4 +1,4 @@
-import PaginationButton from "@/components/SearchPagination/PaginationButton";
+import PaginationButton from "@/components/SearchPage/SearchPagination/PaginationButton";
 import { fireEvent, render, screen } from "@testing-library/react";
 import React from "react";
 

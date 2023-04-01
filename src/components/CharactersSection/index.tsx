@@ -13,6 +13,11 @@ const CharacterCards = styled.div`
   gap: 1rem 1.875rem;
   align-items: center;
   justify-content: center;
+
+  @media (min-width: 768px) {
+    gap: 1.875rem;
+    padding: 0 2.25rem;
+  }
 `;
 
 function CharactersSection({ charactersData }: CharactersType) {

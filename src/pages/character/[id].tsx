@@ -2,94 +2,35 @@ import { Character } from "@/store/modules/data/types";
 import { GetStaticPaths, GetStaticProps } from "next/types";
 import React from "react";
 import { api } from "../api/api";
-import Image from "next/image";
 import styled from "styled-components";
 import Head from "next/head";
-import BioStatus from "@/components/BioStatus";
-import useFavourites from "@/hooks/useFavourites";
+import CharacterCardImage from "@/components/CharacterPage/CharacterCardImage";
+import CharacterText from "@/components/CharacterPage/CharacterText";
 
 type CharacterType = {
   data: Character;
 };
 
-const CharacterContainer = styled.section`
-  padding: 2.125rem 2rem;
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  box-shadow: 0 6px 10px 0 rgba(30, 12, 27, 0.1);
+const CharacterContainer = styled.div`
+  gap: 2rem;
 `;
 
-const ImageContainer = styled.div`
-  position: relative;
-  width: 15.375rem;
-  height: 15.375rem;
-  margin: 0 auto;
+const BioCharTitle = styled.p`
+  display: none;
 
-  img {
-    border-radius: 0.5rem;
+  @media (min-width: 768px) {
+    display: block;
+    font-size: 2rem;
+    overflow: hidden;
+    padding: 6px 0;
+    line-height: 1.25;
+    margin: 18px 0 9px;
+    overflow-wrap: break-word;
+    font-weight: 700;
   }
 `;
 
-const DetailsContainer = styled.div`
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-`;
-
-const CharacterTitleContainer = styled.div`
-  display: flex;
-  align-items: flex-start;
-  justify-content: space-between;
-`;
-
-const CharacterTitle = styled.h1`
-  font-size: 1.5rem;
-  text-align: center;
-`;
-
-const BioStatusContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-`;
-
-const BioStatusTitle = styled.h2`
-  font-size: 18px;
-  text-align: center;
-`;
-
-const BioInfo = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 1rem;
-`;
-
-const BioInfoContainer = styled.div`
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-`;
-
-const BioInfoTitle = styled.h3`
-  font-size: 0.75rem;
-  font-weight: 700;
-  line-height: 1.5;
-`;
-
-const BioInfoText = styled.p`
-  font-size: 14px;
-  font-weight: 300;
-  line-height: 1.5;
-`;
-
 function Character({ data }: CharacterType) {
-  const { isFavorite, favouritesData } = useFavourites(data);
-
-  const blurDataURL =
-    "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAHAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAAQF/8QAIRAAAQMEAQUAAAAAAAAAAAAAAQACAwQFCBETITJEUdL/xAAVAQEBAAAAAAAAAAAAAAAAAAAFBv/EABoRAQEAAgMAAAAAAAAAAAAAAAECABIEMUH/2gAMAwEAAhEDEQA/AJLRkG+kgbELPTyxcXQOlc0k++0rKkyA3I4mxU+yT5DvhEVZrIqHeFxx4p1fM//Z";
-
   return (
     <>
       <Head>
@@ -98,62 +39,10 @@ function Character({ data }: CharacterType) {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <CharacterContainer data-testid="test-character-page">
-        <DetailsContainer>
-          <CharacterTitleContainer>
-            <CharacterTitle data-testid="test-character-name">
-              {data?.name}
-            </CharacterTitle>
-          </CharacterTitleContainer>
-        </DetailsContainer>
-        <ImageContainer>
-          <Image
-            src={data?.image}
-            fill
-            alt={`${data?.name}'s image`}
-            priority
-            placeholder="blur"
-            blurDataURL={blurDataURL}
-            sizes="(max-width: 768px) 15.375rem,
-              (max-width: 1200px) 50vw,
-              33vw"
-          />
-        </ImageContainer>
-        <BioStatusContainer>
-          <BioStatusTitle>Biological Information</BioStatusTitle>
-          <BioStatus
-            isRight={true}
-            isFavorite={isFavorite}
-            data={data}
-            favouritesData={favouritesData}
-          />
-          <BioInfo>
-            <BioInfoContainer>
-              <BioInfoTitle>Gender:</BioInfoTitle>
-              <BioInfoText>{data?.gender}</BioInfoText>
-            </BioInfoContainer>
-            <BioInfoContainer>
-              <BioInfoTitle>Species:</BioInfoTitle>
-              <BioInfoText>{data?.species}</BioInfoText>
-            </BioInfoContainer>
-            <BioInfoContainer>
-              <BioInfoTitle>Origin:</BioInfoTitle>
-              <BioInfoText>{data?.origin?.name}</BioInfoText>
-            </BioInfoContainer>
-            <BioInfoContainer>
-              <BioInfoTitle>Location:</BioInfoTitle>
-              <BioInfoText>{data?.location.name}</BioInfoText>
-            </BioInfoContainer>
-            <BioInfoContainer>
-              <BioInfoTitle>Created at:</BioInfoTitle>
-              <BioInfoText>{data?.created}</BioInfoText>
-            </BioInfoContainer>
-            <BioInfoContainer>
-              <BioInfoTitle>Episodes total:</BioInfoTitle>
-              <BioInfoText>{data?.episode.length}</BioInfoText>
-            </BioInfoContainer>
-          </BioInfo>
-        </BioStatusContainer>
+      <CharacterContainer>
+        <CharacterCardImage data={data} />
+        <BioCharTitle>{data?.name}</BioCharTitle>
+        <CharacterText />
       </CharacterContainer>
     </>
   );
