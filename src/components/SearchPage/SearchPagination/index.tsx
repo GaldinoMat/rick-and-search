@@ -68,10 +68,6 @@ function Pagination({ data }: PaginationType) {
     );
   };
 
-  useEffect(() => {
-    console.log(pages?.current);
-  }, [pages]);
-
   return (
     <PaginationComponent data-testid="test-pagination">
       {data?.info?.prev && (
