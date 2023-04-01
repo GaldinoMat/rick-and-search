@@ -35,7 +35,7 @@ export function matchNextPages(data: ApiLoad) {
   const prevPage = Number(info?.prev?.split(regex)[1]);
 
   return {
-    current: nextPage - 1 || null,
+    current: nextPage - 1 || prevPage + 1 || 0,
     prev: prevPage || null,
     next: nextPage || null,
   };
@@ -68,6 +68,10 @@ function Pagination({ data }: PaginationType) {
     );
   };
 
+  useEffect(() => {
+    console.log(pages?.current);
+  }, [pages]);
+
   return (
     <PaginationComponent data-testid="test-pagination">
       {data?.info?.prev && (
@@ -78,9 +82,11 @@ function Pagination({ data }: PaginationType) {
           url={data?.info?.prev as string}
         />
       )}
-      <PaginationCurrentButtonComponent>
-        {pages?.current}
-      </PaginationCurrentButtonComponent>
+      {pages?.current !== 0 && (
+        <PaginationCurrentButtonComponent>
+          {pages?.current}
+        </PaginationCurrentButtonComponent>
+      )}
       {data?.info?.next && (
         <PaginationButton
           handlePageChange={handlePageChange}

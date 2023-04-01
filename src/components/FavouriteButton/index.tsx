@@ -1,58 +1,59 @@
 import { Character } from "@/store/modules/data/types";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { AnyAction, Dispatch } from "redux";
-import { ActionReturnType } from "../CharactersSection/CharacterCard";
 import styled from "styled-components";
 import { HeartFill } from "@styled-icons/bootstrap";
+import {
+  favouriteCharacter,
+  removeFavorite,
+  saveOnStorage,
+} from "@/store/modules/data/actions";
+import { useDispatch } from "react-redux";
 
-type FavouriteButtonType = {
-  handleAddFavourite: (
-    callback: Dispatch<AnyAction>,
-    character: Character,
-    data: Character[],
-    deleteCallback: (character: Character) => ActionReturnType,
-    addCallback: (character: Character) => ActionReturnType
-  ) => void;
-  dispatch: Dispatch<AnyAction>;
+export type FavouriteButtonType = {
   character: Character;
   data: Character[];
-  deleteCallback: (character: Character) => ActionReturnType;
-  addCallback: (character: Character) => ActionReturnType;
   isFavorite: boolean;
 };
 
+export function handleAddFavourite(
+  callback: Dispatch<AnyAction>,
+  character: Character,
+  data: Character[]
+) {
+  const foundCharacter = data?.find(
+    (dataPiece) => dataPiece.id === character.id
+  );
+
+  if (foundCharacter) {
+    callback(removeFavorite(character));
+  } else {
+    callback(favouriteCharacter(character));
+  }
+
+  callback(saveOnStorage());
+}
+
 const FavouriteButtonComponent = styled(HeartFill)`
-  position: absolute;
   top: 0.25rem;
   right: 0;
   width: 1.875rem;
   height: 1.875rem;
-  transition: all .2s ease-out;
-  fill: ${({ isfavorite }) => (isfavorite ? "#F44336" : "#F2994A")};
+  transition: all 0.2s ease-out;
+  fill: ${({ isfavorite }) => {
+    const favoriteBool = isfavorite === "true";
+    return favoriteBool ? "#F44336" : "#F2994A";
+  }};
 `;
 
-function FavouriteButton({
-  handleAddFavourite,
-  dispatch,
-  character,
-  data,
-  deleteCallback,
-  addCallback,
-  isFavorite,
-}: FavouriteButtonType) {
+function FavouriteButton({ character, data, isFavorite }: FavouriteButtonType) {
+  const dispatch = useDispatch();
+
   return (
     <FavouriteButtonComponent
       data-testid="test-favourite-button"
-      isfavorite={isFavorite}
-      onClick={() =>
-        handleAddFavourite(
-          dispatch,
-          character,
-          data,
-          deleteCallback,
-          addCallback
-        )
-      }
+      isfavorite={isFavorite.toString()}
+      onClick={() => handleAddFavourite(dispatch, character, data)}
     />
   );
 }

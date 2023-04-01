@@ -11,6 +11,8 @@ import {
 import { AnyAction, Dispatch } from "redux";
 import FavouriteButton from "@/components/FavouriteButton";
 import styled from "styled-components";
+import useFavourites from "@/hooks/useFavourites";
+import BioStatus from "@/components/BioStatus";
 
 type CharacterCardType = {
   character: Character;
@@ -23,7 +25,7 @@ export type ActionReturnType = {
 
 const CharacterCardComponent = styled.div`
   width: 8.65rem;
-  min-height: 13rem;
+  min-height: 14rem;
   display: flex;
   flex-direction: column;
   align-items: left;
@@ -48,41 +50,26 @@ const CharacterCardComponent = styled.div`
   }
 `;
 
-export function handleAddFavourite(
-  callback: Dispatch<AnyAction>,
-  character: Character,
-  data: Character[],
-  deleteCallback: (character: Character) => ActionReturnType,
-  addCallback: (character: Character) => ActionReturnType
-) {
-  const foundCharacter = data?.find(
-    (dataPiece) => dataPiece.id === character.id
-  );
+const CharacterTitleContainer = styled.div`
+  display: flex;
+  justify-content: space-between;
+`;
 
-  if (foundCharacter) {
-    callback(deleteCallback(character));
-  } else {
-    callback(addCallback(character));
-  }
+const CharacterInfoContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+`;
 
-  callback(saveOnStorage());
-}
+const CharacterName = styled.div`
+  min-height: 2.2rem;
+`;
 
 function CharacterCard({ character }: CharacterCardType) {
-  const dispatch = useDispatch();
+  const { favouritesData, isFavorite } = useFavourites(character);
 
-  const [isFavorite, setIsFavorite] = useState(false);
-  const data = useSelector<CharacterState, CharacterState>((state) => state)
-    ?.characters?.favourites;
-
-  useEffect(() => {
-    const favouritesJsonData = Array.from<Character>(
-      JSON.parse(window.localStorage.getItem("favourites") as string)
-    );
-    setIsFavorite(
-      favouritesJsonData.some((favourite) => favourite?.id === character?.id)
-    );
-  }, [character?.id, data]);
+  const blurDataURL =
+    "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAHAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAAQF/8QAIRAAAQMEAQUAAAAAAAAAAAAAAQACAwQFCBETITJEUdL/xAAVAQEBAAAAAAAAAAAAAAAAAAAFBv/EABoRAQEAAgMAAAAAAAAAAAAAAAECABIEMUH/2gAMAwEAAhEDEQA/AJLRkG+kgbELPTyxcXQOlc0k++0rKkyA3I4mxU+yT5DvhEVZrIqHeFxx4p1fM//Z";
 
   return (
     <CharacterCardComponent>
@@ -91,20 +78,27 @@ function CharacterCard({ character }: CharacterCardType) {
           src={character.image}
           alt={`${character.name}'s thumbnail image`}
           fill
+          placeholder="blur"
+          blurDataURL={blurDataURL}
           priority
+          sizes="(max-width: 768px) 8.65rem,
+              (max-width: 1200px) 50vw,
+              33vw"
         />
       </Link>
-      <p>{character.name}</p>
-      <p>{character.status}</p>
-      <FavouriteButton
-        isFavorite={isFavorite}
-        handleAddFavourite={handleAddFavourite}
-        dispatch={dispatch}
-        character={character}
-        data={data}
-        addCallback={favouriteCharacter}
-        deleteCallback={removeFavorite}
-      />
+      <CharacterTitleContainer>
+        <CharacterInfoContainer>
+          <CharacterName>
+            <p>{character.name}</p>
+          </CharacterName>
+          <BioStatus
+            isRight={false}
+            isFavorite={isFavorite}
+            data={character}
+            favouritesData={favouritesData}
+          />
+        </CharacterInfoContainer>
+      </CharacterTitleContainer>
     </CharacterCardComponent>
   );
 }

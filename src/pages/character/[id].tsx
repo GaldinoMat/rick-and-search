@@ -1,28 +1,23 @@
-import { Character, CharacterState } from "@/store/modules/data/types";
+import { Character } from "@/store/modules/data/types";
 import { GetStaticPaths, GetStaticProps } from "next/types";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { api } from "../api/api";
-import FavouriteButton from "@/components/FavouriteButton";
-import { useDispatch, useSelector } from "react-redux";
-import { handleAddFavourite } from "@/components/CharactersSection/CharacterCard";
-import {
-  favouriteCharacter,
-  removeFavorite,
-} from "@/store/modules/data/actions";
 import Image from "next/image";
 import styled from "styled-components";
 import Head from "next/head";
+import BioStatus from "@/components/BioStatus";
+import useFavourites from "@/hooks/useFavourites";
 
 type CharacterType = {
   data: Character;
 };
 
 const CharacterContainer = styled.section`
-  padding: 0 2.125rem;
-  padding-top: 6.25rem;
+  padding: 2.125rem 2rem;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+  box-shadow: 0 6px 10px 0 rgba(30, 12, 27, 0.1);
 `;
 
 const ImageContainer = styled.div`
@@ -46,60 +41,54 @@ const DetailsContainer = styled.div`
 const CharacterTitleContainer = styled.div`
   display: flex;
   align-items: flex-start;
-  gap: 0.5rem;
+  justify-content: space-between;
 `;
 
 const CharacterTitle = styled.h1`
   font-size: 1.5rem;
-  max-width: 10rem;
-`;
-
-const AliveStatus = styled.p`
-  padding: 0.5rem;
-  width: 73px;
-  background-color: #27ae60;
-  color: white;
-  border-radius: 0.5rem;
-  font-weight: 500;
   text-align: center;
 `;
 
-const DeadStatus = styled.p`
-  padding: 0.5rem;
-  width: 73px;
-  background-color: #eb5757;
-  color: white;
-  border-radius: 0.5rem;
-  font-weight: 500;
+const BioStatusContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+`;
+
+const BioStatusTitle = styled.h2`
+  font-size: 18px;
   text-align: center;
 `;
 
-const UnknownStatus = styled.p`
-  padding: 0.5rem;
-  width: 73px;
-  background-color: #333333;
-  color: white;
-  border-radius: 0.5rem;
-  font-weight: 500;
-  text-align: center;
+const BioInfo = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+`;
+
+const BioInfoContainer = styled.div`
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+`;
+
+const BioInfoTitle = styled.h3`
+  font-size: 0.75rem;
+  font-weight: 700;
+  line-height: 1.5;
+`;
+
+const BioInfoText = styled.p`
+  font-size: 14px;
+  font-weight: 300;
+  line-height: 1.5;
 `;
 
 function Character({ data }: CharacterType) {
-  const dispatch = useDispatch();
+  const { isFavorite, favouritesData } = useFavourites(data);
 
-  const [isFavorite, setIsFavorite] = useState(false);
-  const favouritesData = useSelector<CharacterState, CharacterState>(
-    (state) => state
-  )?.characters?.favourites;
-
-  useEffect(() => {
-    const favouritesJsonData = Array.from<Character>(
-      JSON.parse(window.localStorage.getItem("favourites") as string)
-    );
-    setIsFavorite(
-      favouritesJsonData.some((favourite) => favourite?.id === data?.id)
-    );
-  }, [data?.id, favouritesData]);
+  const blurDataURL =
+    "data:image/jpeg;base64,/9j/2wBDAAYEBQYFBAYGBQYHBwYIChAKCgkJChQODwwQFxQYGBcUFhYaHSUfGhsjHBYWICwgIyYnKSopGR8tMC0oMCUoKSj/2wBDAQcHBwoIChMKChMoGhYaKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCgoKCj/wAARCAAHAAoDASIAAhEBAxEB/8QAFgABAQEAAAAAAAAAAAAAAAAAAAQF/8QAIRAAAQMEAQUAAAAAAAAAAAAAAQACAwQFCBETITJEUdL/xAAVAQEBAAAAAAAAAAAAAAAAAAAFBv/EABoRAQEAAgMAAAAAAAAAAAAAAAECABIEMUH/2gAMAwEAAhEDEQA/AJLRkG+kgbELPTyxcXQOlc0k++0rKkyA3I4mxU+yT5DvhEVZrIqHeFxx4p1fM//Z";
 
   return (
     <>
@@ -110,45 +99,61 @@ function Character({ data }: CharacterType) {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <CharacterContainer data-testid="test-character-page">
+        <DetailsContainer>
+          <CharacterTitleContainer>
+            <CharacterTitle data-testid="test-character-name">
+              {data?.name}
+            </CharacterTitle>
+          </CharacterTitleContainer>
+        </DetailsContainer>
         <ImageContainer>
           <Image
             src={data?.image}
             fill
             alt={`${data?.name}'s image`}
             priority
+            placeholder="blur"
+            blurDataURL={blurDataURL}
+            sizes="(max-width: 768px) 15.375rem,
+              (max-width: 1200px) 50vw,
+              33vw"
           />
         </ImageContainer>
-        <DetailsContainer>
-          <FavouriteButton
-            handleAddFavourite={handleAddFavourite}
-            character={data}
-            dispatch={dispatch}
-            addCallback={favouriteCharacter}
-            deleteCallback={removeFavorite}
-            data={favouritesData}
+        <BioStatusContainer>
+          <BioStatusTitle>Biological Information</BioStatusTitle>
+          <BioStatus
+            isRight={true}
             isFavorite={isFavorite}
+            data={data}
+            favouritesData={favouritesData}
           />
-          <CharacterTitleContainer>
-            <CharacterTitle data-testid="test-character-name">
-              {data?.name}
-            </CharacterTitle>
-            {data?.status === "Alive" ? (
-              <AliveStatus>{data?.status}</AliveStatus>
-            ) : data?.status === "Dead" ? (
-              <DeadStatus>{data?.status}</DeadStatus>
-            ) : (
-              <UnknownStatus>{data?.status}</UnknownStatus>
-            )}
-          </CharacterTitleContainer>
-          <div>
-            <p>Gender: {data?.gender}</p>
-            <p>Species: {data?.species}</p>
-            <p>Origin: {data?.origin?.name}</p>
-            <p>Location: {data?.location.name}</p>
-            <p>Created at: {data?.created}</p>
-            <p>Episodes total: {data?.episode.length}</p>
-          </div>
-        </DetailsContainer>
+          <BioInfo>
+            <BioInfoContainer>
+              <BioInfoTitle>Gender:</BioInfoTitle>
+              <BioInfoText>{data?.gender}</BioInfoText>
+            </BioInfoContainer>
+            <BioInfoContainer>
+              <BioInfoTitle>Species:</BioInfoTitle>
+              <BioInfoText>{data?.species}</BioInfoText>
+            </BioInfoContainer>
+            <BioInfoContainer>
+              <BioInfoTitle>Origin:</BioInfoTitle>
+              <BioInfoText>{data?.origin?.name}</BioInfoText>
+            </BioInfoContainer>
+            <BioInfoContainer>
+              <BioInfoTitle>Location:</BioInfoTitle>
+              <BioInfoText>{data?.location.name}</BioInfoText>
+            </BioInfoContainer>
+            <BioInfoContainer>
+              <BioInfoTitle>Created at:</BioInfoTitle>
+              <BioInfoText>{data?.created}</BioInfoText>
+            </BioInfoContainer>
+            <BioInfoContainer>
+              <BioInfoTitle>Episodes total:</BioInfoTitle>
+              <BioInfoText>{data?.episode.length}</BioInfoText>
+            </BioInfoContainer>
+          </BioInfo>
+        </BioStatusContainer>
       </CharacterContainer>
     </>
   );

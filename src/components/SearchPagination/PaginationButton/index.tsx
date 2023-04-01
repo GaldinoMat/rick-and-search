@@ -16,6 +16,7 @@ const PaginationButtonComponent = styled.button`
   color: #828282;
   background: transparent;
   font-weight: 700;
+  cursor: pointer;
 `;
 
 function PaginationButton({
