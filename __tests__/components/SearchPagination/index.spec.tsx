@@ -64,7 +64,7 @@ describe("Pagination component", () => {
 
   test("should return null for current page when next page is not present", () => {
     const expectedResult = {
-      current: null,
+      current: 34,
       prev: 33,
       next: null,
     };

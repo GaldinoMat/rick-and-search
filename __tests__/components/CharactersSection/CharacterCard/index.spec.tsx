@@ -47,12 +47,8 @@ describe("Character Card", () => {
   test("should call handleAddFavourite", () => {
     const mockedStore = makeSut();
     renderChar(mockedStore, mockCharacter);
-    const handleAddFavourite = jest.fn()
-    const dispatch = jest.fn();
-    const deleteCallback = jest.fn();
-    const addCallback = jest.fn();
 
-    const mockFavoriteCharacter = [
+    const mockFavoriteCharacters = [
       {
         created: "2017-11-04T20:03:34.737Z",
         episode: ["https://rickandmortyapi.com/api/episode/28"],
@@ -73,14 +69,13 @@ describe("Character Card", () => {
     ];
 
     render(
-      <FavouriteButton
-        handleAddFavourite={handleAddFavourite}
-        dispatch={dispatch}
-        character={mockCharacter}
-        addCallback={addCallback}
-        deleteCallback={deleteCallback}
-        data={mockFavoriteCharacter}
-      />
+      <Provider store={mockedStore}>
+        <FavouriteButton
+          isFavorite
+          character={mockCharacter}
+          data={mockFavoriteCharacters}
+        />
+      </Provider>
     );
 
     const favButtons = screen.getAllByTestId("test-favourite-button");
