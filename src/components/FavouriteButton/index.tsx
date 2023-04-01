@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { AnyAction, Dispatch } from "redux";
 import { ActionReturnType } from "../CharactersSection/CharacterCard";
 import styled from "styled-components";
+import { HeartFill } from "@styled-icons/bootstrap";
 
 type FavouriteButtonType = {
   handleAddFavourite: (
@@ -17,12 +18,17 @@ type FavouriteButtonType = {
   data: Character[];
   deleteCallback: (character: Character) => ActionReturnType;
   addCallback: (character: Character) => ActionReturnType;
+  isFavorite: boolean;
 };
 
-const FavouriteButtonComponent = styled.button`
+const FavouriteButtonComponent = styled(HeartFill)`
   position: absolute;
-  top: 0;
+  top: 0.25rem;
   right: 0;
+  width: 1.875rem;
+  height: 1.875rem;
+  transition: all .2s ease-out;
+  fill: ${({ isfavorite }) => (isfavorite ? "#F44336" : "#F2994A")};
 `;
 
 function FavouriteButton({
@@ -32,21 +38,12 @@ function FavouriteButton({
   data,
   deleteCallback,
   addCallback,
+  isFavorite,
 }: FavouriteButtonType) {
-  const [isFavorite, setIsFavorite] = useState(false);
-
-  useEffect(() => {
-    const favouritesData = Array.from<Character>(
-      JSON.parse(window.localStorage.getItem("favourites") as string)
-    );
-    setIsFavorite(
-      favouritesData.some((dataChunk) => dataChunk?.id === character?.id)
-    );
-  }, [character?.id]);
-
   return (
     <FavouriteButtonComponent
       data-testid="test-favourite-button"
+      isfavorite={isFavorite}
       onClick={() =>
         handleAddFavourite(
           dispatch,
@@ -56,9 +53,7 @@ function FavouriteButton({
           addCallback
         )
       }
-    >
-      Favourite
-    </FavouriteButtonComponent>
+    />
   );
 }
 

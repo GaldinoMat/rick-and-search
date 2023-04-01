@@ -1,17 +1,15 @@
 import Link from "next/link";
-import React from "react";
+import React, { FormEvent } from "react";
 import styled from "styled-components";
 
 type SearchFormType = {
   query: string;
   setQuery: (query: string) => void;
   handleChange: (e: Event) => void;
-  handleSearch: () => void;
+  handleSearch: (e: FormEvent<HTMLFormElement>) => void;
 };
 
-const SearchFormComponent = styled.section`
-  padding: 0 2.125rem;
-  padding-top: 1.5rem;
+const SearchFormComponent = styled.form`
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -89,7 +87,7 @@ function SearchForm({
   setQuery,
 }: SearchFormType) {
   return (
-    <SearchFormComponent>
+    <SearchFormComponent onSubmit={(e) => handleSearch(e)}>
       <SearchFormContainer data-testid="search-form">
         <InputComponent
           type="text"
@@ -111,7 +109,7 @@ function SearchForm({
         </SelectComponent>
       </SearchFormContainer>
       <SearchButtonContainer>
-        <SearchButton data-testid="search-go" onClick={() => handleSearch()}>
+        <SearchButton data-testid="search-go" type="submit">
           Search!
         </SearchButton>
         <Link href="/favourites">Go to your favourites!</Link>

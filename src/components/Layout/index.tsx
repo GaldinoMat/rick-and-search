@@ -9,7 +9,8 @@ type LayoutType = {
 const Main = styled.main`
   min-height: 100vh;
   background-color: white;
-  color: #092C4C;
+  color: #092c4c;
+  padding: 1.5rem 2.125rem;
 `;
 
 function Layout({ children }: LayoutType) {

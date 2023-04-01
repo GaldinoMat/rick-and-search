@@ -1,5 +1,5 @@
 import { Character, CharacterState } from "@/store/modules/data/types";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
 import { useDispatch, useSelector } from "react-redux";
@@ -23,12 +23,13 @@ export type ActionReturnType = {
 
 const CharacterCardComponent = styled.div`
   width: 8.65rem;
+  min-height: 13rem;
   display: flex;
   flex-direction: column;
   align-items: left;
   justify-content: left;
   position: relative;
-  gap: .5rem;
+  gap: 0.5rem;
 
   a {
     width: 100%;
@@ -70,8 +71,18 @@ export function handleAddFavourite(
 function CharacterCard({ character }: CharacterCardType) {
   const dispatch = useDispatch();
 
+  const [isFavorite, setIsFavorite] = useState(false);
   const data = useSelector<CharacterState, CharacterState>((state) => state)
     ?.characters?.favourites;
+
+  useEffect(() => {
+    const favouritesJsonData = Array.from<Character>(
+      JSON.parse(window.localStorage.getItem("favourites") as string)
+    );
+    setIsFavorite(
+      favouritesJsonData.some((favourite) => favourite?.id === character?.id)
+    );
+  }, [character?.id, data]);
 
   return (
     <CharacterCardComponent>
@@ -86,6 +97,7 @@ function CharacterCard({ character }: CharacterCardType) {
       <p>{character.name}</p>
       <p>{character.status}</p>
       <FavouriteButton
+        isFavorite={isFavorite}
         handleAddFavourite={handleAddFavourite}
         dispatch={dispatch}
         character={character}

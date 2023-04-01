@@ -8,6 +8,7 @@ const renderFavouritePagination = (
 ) => {
   render(
     <FavouritesPaginationButton
+      currentPage={1}
       handleChangeFavouritePage={handleChangeFavouritePage}
       index={index}
     />

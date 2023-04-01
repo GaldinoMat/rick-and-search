@@ -1,6 +1,6 @@
 import { Character, CharacterState } from "@/store/modules/data/types";
 import { GetStaticPaths, GetStaticProps } from "next/types";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { api } from "../api/api";
 import FavouriteButton from "@/components/FavouriteButton";
 import { useDispatch, useSelector } from "react-redux";
@@ -87,9 +87,19 @@ const UnknownStatus = styled.p`
 function Character({ data }: CharacterType) {
   const dispatch = useDispatch();
 
+  const [isFavorite, setIsFavorite] = useState(false);
   const favouritesData = useSelector<CharacterState, CharacterState>(
     (state) => state
   )?.characters?.favourites;
+
+  useEffect(() => {
+    const favouritesJsonData = Array.from<Character>(
+      JSON.parse(window.localStorage.getItem("favourites") as string)
+    );
+    setIsFavorite(
+      favouritesJsonData.some((favourite) => favourite?.id === data?.id)
+    );
+  }, [data?.id, favouritesData]);
 
   return (
     <>
@@ -116,6 +126,7 @@ function Character({ data }: CharacterType) {
             addCallback={favouriteCharacter}
             deleteCallback={removeFavorite}
             data={favouritesData}
+            isFavorite={isFavorite}
           />
           <CharacterTitleContainer>
             <CharacterTitle data-testid="test-character-name">

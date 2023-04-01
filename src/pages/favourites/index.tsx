@@ -5,6 +5,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Head from "next/head";
 import FavouritesPaginationButton from "@/components/FavouritesPaginationButton";
+import styled from "styled-components";
 
 export function splitArray(array: any[]) {
   const subarrays = [];
@@ -13,6 +14,18 @@ export function splitArray(array: any[]) {
   }
   return subarrays;
 }
+
+const CharactersSectionComponent = styled.section`
+  margin-top: 1.5rem;
+`;
+
+const PaginationComponent = styled.section`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1.5rem;
+  gap: 0.5rem;
+`;
 
 function Favourites() {
   const data = useSelector<CharacterState, CharacterState>((state) => state)
@@ -24,9 +37,11 @@ function Favourites() {
     []
   );
   const [displayedFavorites, setdisplayedFavorites] = useState<Character[]>([]);
+  const [currentPage, setcurrentPage] = useState(1);
 
   const handleChangeFavouritePage = (index: number) => {
     setdisplayedFavorites(paginatedFavourites[index]);
+    setcurrentPage(index + 1);
   };
 
   useEffect(() => {
@@ -61,16 +76,19 @@ function Favourites() {
           {data?.length === 0 ? (
             <h2 data-testid="test-no-favourites">Sorry, no favorites here!</h2>
           ) : (
-            <>
+            <CharactersSectionComponent>
               <CharactersSection charactersData={displayedFavorites} />
-              {paginatedFavourites.map((array, index) => (
-                <FavouritesPaginationButton
-                  handleChangeFavouritePage={handleChangeFavouritePage}
-                  index={index}
-                  key={index}
-                />
-              ))}
-            </>
+              <PaginationComponent>
+                {paginatedFavourites.map((array, index) => (
+                  <FavouritesPaginationButton
+                    handleChangeFavouritePage={handleChangeFavouritePage}
+                    index={index}
+                    key={index}
+                    currentPage={currentPage}
+                  />
+                ))}
+              </PaginationComponent>
+            </CharactersSectionComponent>
           )}
         </div>
       </section>

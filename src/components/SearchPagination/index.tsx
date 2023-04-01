@@ -4,10 +4,29 @@ import { ApiLoad } from "@/store/modules/data/types";
 import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import PaginationButton from "./PaginationButton";
+import styled from "styled-components";
 
 type PaginationType = {
   data: ApiLoad;
 };
+
+const PaginationComponent = styled.section`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 1.5rem;
+  gap: 0.5rem;
+`;
+
+const PaginationCurrentButtonComponent = styled.button`
+  width: 3rem;
+  height: 3rem;
+  border-radius: 0.25rem;
+  border: 1px solid #092c4c;
+  background: #092c4c;
+  color: white;
+  font-weight: 700;
+`;
 
 export function matchNextPages(data: ApiLoad) {
   const info = data?.info;
@@ -50,21 +69,27 @@ function Pagination({ data }: PaginationType) {
   };
 
   return (
-    <section data-testid="test-pagination">
-      <PaginationButton
-        handlePageChange={handlePageChange}
-        pageNumber={pages?.prev}
-        testid={"test-prev-button"}
-        url={data?.info?.prev as string}
-      />
-      <button>{pages?.current}</button>
-      <PaginationButton
-        handlePageChange={handlePageChange}
-        pageNumber={pages?.next}
-        testid={"test-next-button"}
-        url={data?.info?.next as string}
-      />
-    </section>
+    <PaginationComponent data-testid="test-pagination">
+      {data?.info?.prev && (
+        <PaginationButton
+          handlePageChange={handlePageChange}
+          pageNumber={pages?.prev}
+          testid={"test-prev-button"}
+          url={data?.info?.prev as string}
+        />
+      )}
+      <PaginationCurrentButtonComponent>
+        {pages?.current}
+      </PaginationCurrentButtonComponent>
+      {data?.info?.next && (
+        <PaginationButton
+          handlePageChange={handlePageChange}
+          pageNumber={pages?.next}
+          testid={"test-next-button"}
+          url={data?.info?.next as string}
+        />
+      )}
+    </PaginationComponent>
   );
 }
 

@@ -3,8 +3,7 @@ import React from "react";
 import styled from "styled-components";
 
 const HomeDisclaimer = styled.section`
-  padding-top: 6.25rem;
-
+  padding-top: 5.5rem;
   display: flex;
   flex-direction: column;
   align-items: center;

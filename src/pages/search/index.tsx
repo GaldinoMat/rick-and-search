@@ -1,7 +1,7 @@
 import CharactersSection from "@/components/CharactersSection";
 import { fetchFromAPI, loadFoundResults } from "@/store/modules/data/actions";
 import { CharacterState } from "@/store/modules/data/types";
-import React, { useState } from "react";
+import React, { FormEvent, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { apiGet } from "../api/api";
 import Head from "next/head";
@@ -10,8 +10,7 @@ import SearchForm from "@/components/SearchForm";
 import styled from "styled-components";
 
 const CharactersSectionComponent = styled.section`
-  padding: 0 2.125rem;
-  padding-top: 1.5rem;
+  margin-top: 1.5rem;
 `;
 
 function Search() {
@@ -23,7 +22,8 @@ function Search() {
   const [queryType, setQueryType] = useState("name");
   const [query, setQuery] = useState("");
 
-  const handleSearch = async () => {
+  const handleSearch = async (e: FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     await apiGet(
       dispatch,
       fetchFromAPI(`/?${queryType}=${query.toLowerCase()}`),
