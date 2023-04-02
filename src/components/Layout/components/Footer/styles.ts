@@ -18,6 +18,10 @@ export const FooterComponent = styled.footer`
       width: 75%;
       margin: 0 auto;
     }
+
+    @media (min-width: 1200px) {
+      width: 65.5%;
+    }
   }
 `;
 

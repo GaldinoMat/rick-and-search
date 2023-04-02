@@ -23,6 +23,10 @@ export const HeaderComponent = styled.header`
       width: 75%;
       margin: 0 auto;
     }
+
+    @media (min-width: 1200px) {
+      width: 65.5%;
+    }
   }
 
   a {
