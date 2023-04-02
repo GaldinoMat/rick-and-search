@@ -5,7 +5,7 @@ import { api } from "../api/api";
 import Head from "next/head";
 import CharacterCardImage from "@/components/CharacterPage/CharacterCardImage";
 import CharacterText from "@/components/CharacterPage/CharacterText";
-import { BioCharTitle } from "./styles";
+import { BioCharTitle } from "../../styles/character/styles";
 
 type CharacterType = {
   data: Character;

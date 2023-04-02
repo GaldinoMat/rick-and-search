@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Head from "next/head";
 import FavouritesPaginationButton from "@/components/FavouritesPage/FavouritesPaginationButton";
-import { CharactersSectionComponent, PaginationComponent } from "./styles";
+import { CharactersSectionComponent, PaginationComponent } from "../../styles/favourites/styles";
 
 export function splitArray(array: any[]) {
   const subarrays = [];
