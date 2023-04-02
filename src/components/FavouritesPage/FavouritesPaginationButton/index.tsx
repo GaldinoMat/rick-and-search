@@ -7,7 +7,10 @@ type FavouritesPaginationTypes = {
   handleChangeFavouritePage: (index: number) => void;
 };
 
-const PaginationButtonComponent = styled.button`
+const PaginationButtonComponent = styled.button<{
+  currentPage: number;
+  index: number;
+}>`
   width: 3rem;
   height: 3rem;
   border-radius: 0.25rem;
