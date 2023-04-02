@@ -28,5 +28,10 @@ export const Container = styled.section`
 
   @media (min-width: 1024px) {
     width: 75%;
+    overflow: auto;
+  }
+
+  @media (min-width: 1200px) {
+    width: 65%;
   }
 `;

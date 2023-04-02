@@ -15,6 +15,10 @@ export const CharacterCardComponent = styled.div`
     width: 12rem;
   }
 
+  @media (min-width: 1200px) {
+    width: 15rem;
+  }
+
   a {
     width: 100%;
     height: 8.65rem;
@@ -27,6 +31,10 @@ export const CharacterCardComponent = styled.div`
 
     @media (min-width: 768px) {
       height: 12rem;
+    }
+
+    @media (min-width: 1200px) {
+      height: 15rem;
     }
   }
 
