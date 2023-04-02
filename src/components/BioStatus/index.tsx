@@ -10,12 +10,9 @@ type BioStatusType = {
   isRight: boolean;
 };
 
-const BioStatusComponent = styled.div`
+const BioStatusComponent = styled.div<{ isright: boolean }>`
   display: flex;
-  justify-content: ${({ isright }) => {
-    const isRightBool = isright === "true";
-    return isRightBool ? "flex-end" : "flex-start";
-  }};
+  justify-content: ${({ isright }) => (isright ? "flex-end" : "flex-start")};
   gap: 0.5rem;
   width: 100%;
 
@@ -61,7 +58,7 @@ function BioStatus({
   isRight,
 }: BioStatusType) {
   return (
-    <BioStatusComponent isright={isRight.toString()}>
+    <BioStatusComponent isright={isRight}>
       {data?.status === "Alive" ? (
         <AliveStatus>{data?.status}</AliveStatus>
       ) : data?.status === "Dead" ? (

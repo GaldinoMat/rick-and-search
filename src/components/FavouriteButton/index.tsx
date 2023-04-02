@@ -34,15 +34,12 @@ export function handleAddFavourite(
   callback(saveOnStorage());
 }
 
-const FavouriteButtonComponent = styled(HeartFill)`
+const FavouriteButtonComponent = styled(HeartFill)<{ isfavorite: boolean }>`
   top: 0.25rem;
   right: 0;
   width: 1.5rem;
   transition: all 0.2s ease-out;
-  fill: ${({ isfavorite }) => {
-    const favoriteBool = isfavorite === "true";
-    return favoriteBool ? "#F44336" : "#520044";
-  }};
+  fill: ${({ isfavorite }) => (isfavorite ? "#F44336" : "#520044")};
 `;
 
 function FavouriteButton({ character, data, isFavorite }: FavouriteButtonType) {
@@ -51,7 +48,7 @@ function FavouriteButton({ character, data, isFavorite }: FavouriteButtonType) {
   return (
     <FavouriteButtonComponent
       data-testid="test-favourite-button"
-      isfavorite={isFavorite.toString()}
+      isfavorite={isFavorite}
       onClick={() => handleAddFavourite(dispatch, character, data)}
     />
   );
