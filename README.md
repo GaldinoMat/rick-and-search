@@ -2,6 +2,10 @@
 
 Esse é um projeto feito em Next.JS utilizando Redux e sua arquitetura, cujo principal objetivo é a resolução de um catálogo de personagens de Rick and Morty, com paginação de resultados e páginas de placeholder para cada personagem. A wiki do Rick and Morty foi utilizada como inpiração do layout.
 
+## Deploy
+
+Link: https://rick-and-search.vercel.app/
+
 ## Passo a passo
 
 Entre na raiz do projeto e instale as dependências com o seu gerenciador de pacotes de preferência.
