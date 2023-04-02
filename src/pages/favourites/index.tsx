@@ -5,7 +5,7 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Head from "next/head";
 import FavouritesPaginationButton from "@/components/FavouritesPage/FavouritesPaginationButton";
-import styled from "styled-components";
+import { CharactersSectionComponent, PaginationComponent } from "./styles";
 
 export function splitArray(array: any[]) {
   const subarrays = [];
@@ -14,18 +14,6 @@ export function splitArray(array: any[]) {
   }
   return subarrays;
 }
-
-const CharactersSectionComponent = styled.section`
-  margin-top: 1.5rem;
-`;
-
-const PaginationComponent = styled.section`
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  margin-top: 1.5rem;
-  gap: 0.5rem;
-`;
 
 function Favourites() {
   const data = useSelector<CharacterState, CharacterState>((state) => state)

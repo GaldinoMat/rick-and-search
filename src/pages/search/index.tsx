@@ -7,11 +7,7 @@ import { apiGet } from "../api/api";
 import Head from "next/head";
 import Pagination from "@/components/SearchPage/SearchPagination";
 import SearchForm from "@/components/SearchPage/SearchForm";
-import styled from "styled-components";
-
-const CharactersSectionComponent = styled.section`
-  margin-top: 1.5rem;
-`;
+import { CharactersSectionComponent } from "./styles";
 
 function Search() {
   const data = useSelector<CharacterState, CharacterState>(

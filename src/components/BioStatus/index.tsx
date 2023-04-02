@@ -1,7 +1,12 @@
 import React from "react";
-import styled from "styled-components";
 import FavouriteButton from "../FavouriteButton";
 import { Character } from "@/store/modules/data/types";
+import {
+  BioStatusComponent,
+  AliveStatus,
+  DeadStatus,
+  UnknownStatus,
+} from "./styles";
 
 type BioStatusType = {
   data: Character;
@@ -9,47 +14,6 @@ type BioStatusType = {
   favouritesData: Character[];
   isRight: boolean;
 };
-
-const BioStatusComponent = styled.div<{ isright: boolean }>`
-  display: flex;
-  justify-content: ${({ isright }) => (isright ? "flex-end" : "flex-start")};
-  gap: 0.5rem;
-  width: 100%;
-
-  @media (min-width: 768px) {
-    justify-content: space-between;
-  }
-`;
-
-const AliveStatus = styled.p`
-  padding: 0.5rem;
-  width: 4.5625rem;
-  background-color: #27ae60;
-  color: white;
-  border-radius: 0.5rem;
-  font-weight: 500;
-  text-align: center;
-`;
-
-const DeadStatus = styled.p`
-  padding: 0.5rem;
-  width: 4.5625rem;
-  background-color: #eb5757;
-  color: white;
-  border-radius: 0.5rem;
-  font-weight: 500;
-  text-align: center;
-`;
-
-const UnknownStatus = styled.p`
-  padding: 0.5rem;
-  width: 5.5rem;
-  background-color: #333333;
-  color: white;
-  border-radius: 0.5rem;
-  font-weight: 500;
-  text-align: center;
-`;
 
 function BioStatus({
   data,

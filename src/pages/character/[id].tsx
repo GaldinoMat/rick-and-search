@@ -2,29 +2,14 @@ import { Character } from "@/store/modules/data/types";
 import { GetStaticPaths, GetStaticProps } from "next/types";
 import React from "react";
 import { api } from "../api/api";
-import styled from "styled-components";
 import Head from "next/head";
 import CharacterCardImage from "@/components/CharacterPage/CharacterCardImage";
 import CharacterText from "@/components/CharacterPage/CharacterText";
+import { BioCharTitle } from "./styles";
 
 type CharacterType = {
   data: Character;
 };
-
-const BioCharTitle = styled.p`
-  display: none;
-
-  @media (min-width: 768px) {
-    display: block;
-    font-size: 2rem;
-    overflow: hidden;
-    padding: 6px 0;
-    line-height: 1.25;
-    margin: 18px 0 9px;
-    overflow-wrap: break-word;
-    font-weight: 700;
-  }
-`;
 
 function Character({ data }: CharacterType) {
   return (

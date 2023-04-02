@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components";
+import { PaginationButtonComponent } from "./styles";
 
 type PaginationButtonType = {
   testid: string;
@@ -7,17 +7,6 @@ type PaginationButtonType = {
   pageNumber: number | null;
   url: string;
 };
-
-const PaginationButtonComponent = styled.button`
-  width: 3rem;
-  height: 3rem;
-  border-radius: 0.25rem;
-  border: 1px solid #828282;
-  color: #828282;
-  background: transparent;
-  font-weight: 700;
-  cursor: pointer;
-`;
 
 function PaginationButton({
   handlePageChange,
