@@ -8,6 +8,7 @@ import Head from "next/head";
 import Pagination from "@/components/SearchPage/SearchPagination";
 import SearchForm from "@/components/SearchPage/SearchForm";
 import { CharactersSectionComponent } from "../../styles/search/styles";
+import { Subtitle } from "@/components/HomeTitle/styles";
 
 function Search() {
   const data = useSelector<CharacterState, CharacterState>(
@@ -42,6 +43,9 @@ function Search() {
         <meta name="viewport" content="width=device-width, initial-scale=1" />
         <link rel="icon" href="/favicon.ico" />
       </Head>
+      <div>
+        <Subtitle>Search for any character!</Subtitle>
+      </div>
       <SearchForm
         handleChange={handleChange}
         handleSearch={handleSearch}

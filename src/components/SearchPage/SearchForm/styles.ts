@@ -6,9 +6,11 @@ export const SearchFormComponent = styled.form`
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
+  margin-top: 0.75rem;
 
   @media (min-width: 768px) {
     flex-direction: row;
+    margin-top: 1.5rem;
   }
 `;
 
@@ -70,6 +72,9 @@ export const SearchButton = styled.button`
   font-weight: 400;
   border: none;
   cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 
   @media (min-width: 768px) {
     padding: 0.875rem 2.125rem;
@@ -103,8 +108,7 @@ export const SearchButtonContainer = styled.div`
 
     @media (min-width: 768px) {
       font-size: 1rem;
-      display: block;
-      padding: 0.875rem 1.375rem;
+      padding: 0 0.375rem;
     }
   }
 `;

@@ -6,6 +6,7 @@ import { useSelector, useDispatch } from "react-redux";
 import Head from "next/head";
 import FavouritesPaginationButton from "@/components/FavouritesPage/FavouritesPaginationButton";
 import { CharactersSectionComponent, PaginationComponent } from "../../styles/favourites/styles";
+import { Subtitle } from "@/components/HomeTitle/styles";
 
 export function splitArray(array: any[]) {
   const subarrays = [];
@@ -58,7 +59,7 @@ function Favourites() {
       </Head>
       <section data-testid="test-favourites">
         <div>
-          <h1>Your favourites!</h1>
+          <Subtitle>Check out your favourite characters here!</Subtitle>
         </div>
         <div>
           {data?.length === 0 ? (
