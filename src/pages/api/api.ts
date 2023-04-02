@@ -20,7 +20,37 @@ export const apiGet = async (
   getAction: getActionType,
   displayAction: (data: any) => void
 ) => {
-  const { data }: any = await dispatchFunc(getAction);
-
-  dispatchFunc(displayAction(data));
+  try {
+    const { data }: any = await dispatchFunc(getAction);
+    dispatchFunc(displayAction(data));
+  } catch (error) {
+    const data = {
+      info: {
+        count: 0,
+        pages: 0,
+        next: null,
+        prev: null,
+      },
+      results: [
+        {
+          created: "",
+          episode: [""],
+          gender: "",
+          id: 0,
+          image: "",
+          location: {
+            name: "",
+            url: "",
+          },
+          name: "",
+          origin: { name: "", url: "" },
+          species: "",
+          status: "",
+          type: "",
+          url: "",
+        },
+      ],
+    };
+    dispatchFunc(displayAction(data));
+  }
 };

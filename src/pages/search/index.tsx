@@ -53,11 +53,15 @@ function Search() {
         setQuery={setQuery}
       />
       <CharactersSectionComponent>
-        {data?.results?.length !== 0 && (
+        {data?.results[0]?.id === 0 ? (
+          <Subtitle data-testid="test-catch">Sorry, no valid results were found</Subtitle>
+        ) : data?.results?.length !== 0 ? (
           <>
             <CharactersSection charactersData={data?.results} />
             <Pagination data={data} />
           </>
+        ) : (
+          <></>
         )}
       </CharactersSectionComponent>
     </>
