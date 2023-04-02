@@ -4,7 +4,9 @@ import React from "react";
 import { Provider } from "react-redux";
 import { MockStoreEnhanced } from "redux-mock-store";
 import { makeSut } from "../../../store/modules/data/reducer.spec";
-import Pagination, { matchNextPages } from "@/components/SearchPage/SearchPagination";
+import Pagination, {
+  matchNextPages,
+} from "@/components/SearchPage/SearchPagination";
 
 const mockPageData = (next: string | null, prev: string | null) => {
   return {
