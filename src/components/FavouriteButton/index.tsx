@@ -8,6 +8,7 @@ import {
 } from "@/store/modules/data/actions";
 import { useDispatch } from "react-redux";
 import { FavouriteButtonComponent } from "./styles";
+import { toast } from "react-toastify";
 
 export type FavouriteButtonType = {
   character: Character;
@@ -26,8 +27,10 @@ export function handleAddFavourite(
 
   if (foundCharacter) {
     callback(removeFavorite(character));
+    toast.info("Character removed from favourites... 💔");
   } else {
     callback(favouriteCharacter(character));
+    toast.info("Character added to favourites! ❤️");
   }
 
   callback(saveOnStorage());

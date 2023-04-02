@@ -41,56 +41,66 @@ describe("Search page", () => {
     fireEvent.click(button);
   });
 
-  test("should properly show fallback text when invalid output is sent result", () => {
+  test("should properly show search CTA text when page load", () => {
+    const mockedStore = makeSut();
+    renderSearch(mockedStore);
+
     waitFor(() => {
-      const mockFailedData = {
-        info: {
-          count: 0,
-          pages: 0,
-          next: null,
-          prev: null,
-        },
-        results: [
-          {
-            created: "",
-            episode: [""],
-            gender: "",
-            id: 0,
-            image: "",
-            location: {
-              name: "",
-              url: "",
-            },
+      const searchCTA = screen.getByTestId("test-search-cta");
+      expect(searchCTA).toBeInTheDocument();
+    });
+  });
+
+  test("should properly show fallback text when invalid output is sent result", () => {
+    const mockFailedData = {
+      info: {
+        count: 0,
+        pages: 0,
+        next: null,
+        prev: null,
+      },
+      results: [
+        {
+          created: "",
+          episode: [""],
+          gender: "",
+          id: 0,
+          image: "",
+          location: {
             name: "",
-            origin: { name: "", url: "" },
-            species: "",
-            status: "",
-            type: "",
             url: "",
           },
-        ],
-      };
-
-      const mockCleanData = {
-        info: {
-          count: 0,
-          pages: 0,
-          next: null,
-          prev: null,
+          name: "",
+          origin: { name: "", url: "" },
+          species: "",
+          status: "",
+          type: "",
+          url: "",
         },
-        results: [],
-        favourites: [],
-      };
+      ],
+    };
 
-      const mockedStore = makeSut();
-      renderSearch(mockedStore);
+    const mockCleanData = {
+      info: {
+        count: 0,
+        pages: 0,
+        next: null,
+        prev: null,
+      },
+      results: [],
+      favourites: [],
+    };
 
-      const successAction = {
-        type: "LOAD_FOUND_RESULTS",
-        payload: mockFailedData,
-      };
+    const mockedStore = makeSut();
+    renderSearch(mockedStore);
 
-      data(mockCleanData, successAction);
+    const successAction = {
+      type: "LOAD_FOUND_RESULTS",
+      payload: mockFailedData,
+    };
+    data(mockCleanData, successAction);
+
+    waitFor(() => {
       const failedText = screen.getByTestId("test-catch");
 
       expect(failedText).toBeInTheDocument();

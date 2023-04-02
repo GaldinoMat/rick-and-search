@@ -61,7 +61,7 @@ function Search() {
             <Pagination data={data} />
           </>
         ) : (
-          <></>
+          <Subtitle data-testid="test-search-cta">Search for any character!</Subtitle>
         )}
       </CharactersSectionComponent>
     </>
